@@ -1,23 +1,23 @@
-package uk.firedev.plugintemplate;
+package org.evenmorefish.dimensionfishing;
 
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-public final class PluginTemplate extends JavaPlugin {
+public class DimensionFishing extends JavaPlugin {
 
-    private static PluginTemplate INSTANCE;
+    private static DimensionFishing INSTANCE;
 
-    public PluginTemplate() {
+    public DimensionFishing() {
         if (INSTANCE != null) {
             throw new UnsupportedOperationException(getClass().getName() + " has already been assigned!");
         }
         INSTANCE = this;
     }
 
-    public static @NotNull PluginTemplate getInstance() {
+    public static @NotNull DimensionFishing getInstance() {
         if (INSTANCE == null) {
-            throw new IllegalStateException(PluginTemplate.class.getSimpleName() + " has not been assigned!");
+            throw new IllegalStateException(DimensionFishing.class.getSimpleName() + " has not been assigned!");
         }
         return INSTANCE;
     }

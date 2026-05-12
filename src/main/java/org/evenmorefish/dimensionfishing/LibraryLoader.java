@@ -1,4 +1,4 @@
-package uk.firedev.plugintemplate;
+package org.evenmorefish.dimensionfishing;
 
 import com.google.gson.Gson;
 import io.papermc.paper.plugin.loader.PluginClasspathBuilder;
