@@ -23,6 +23,9 @@ public class LibraryLoader implements PluginLoader {
     public void classloader(PluginClasspathBuilder classpathBuilder) {
         MavenLibraryResolver resolver = new MavenLibraryResolver();
         PluginLibraries pluginLibraries = load();
+        if (pluginLibraries == null) {
+            return;
+        }
         pluginLibraries.asDependencies().forEach(resolver::addDependency);
         pluginLibraries.asRepositories().forEach(resolver::addRepository);
         classpathBuilder.addLibrary(resolver);
@@ -31,7 +34,7 @@ public class LibraryLoader implements PluginLoader {
     private PluginLibraries load() {
         try (InputStream in = getClass().getResourceAsStream("/paper-libraries.json")) {
             if (in == null) {
-                throw new RuntimeException("paper-libraries.json not found.");
+                return null;
             }
             return new Gson().fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), PluginLibraries.class);
         } catch (IOException e) {

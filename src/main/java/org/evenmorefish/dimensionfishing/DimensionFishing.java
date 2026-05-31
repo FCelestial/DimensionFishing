@@ -1,7 +1,10 @@
 package org.evenmorefish.dimensionfishing;
 
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.evenmorefish.dimensionfishing.common.FishingListener;
+import org.evenmorefish.dimensionfishing.common.HookManager;
 import org.jetbrains.annotations.NotNull;
 
 public class DimensionFishing extends JavaPlugin {
@@ -26,10 +29,16 @@ public class DimensionFishing extends JavaPlugin {
     public void onLoad() {}
 
     @Override
-    public void onEnable() {}
+    public void onEnable() {
+        Bukkit.getPluginManager().registerEvents(FishingListener.getInstance(), this);
+        HookManager.getInstance().load();
+    }
 
     @Override
-    public void onDisable() {}
+    public void onDisable() {
+        FishingListener.getInstance().shutdown();
+        HookManager.getInstance().shutdown();
+    }
 
     private void registerCommands() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
