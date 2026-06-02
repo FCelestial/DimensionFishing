@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitTask;
 import org.evenmorefish.dimensionfishing.DimensionFishing;
+import org.evenmorefish.dimensionfishing.events.LavaFishCaughtEvent;
 import org.jspecify.annotations.NonNull;
 
 import java.util.HashMap;
@@ -86,8 +87,15 @@ public class HookManager {
                 return;
             }
             trackedHooks.remove(event.getPlayer().getUniqueId());
+
+            switch (tracked.state()) {
+                case LAVA -> new LavaFishCaughtEvent(event, tracked).callEvent();
+                case VOID -> {}
+            }
+
             tracked.invalidate();
             event.getPlayer().sendPlainMessage("Reeled in armor stand");
+            event.setCancelled(true);
         }
     }
 

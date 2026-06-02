@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.evenmorefish.dimensionfishing.common.FishingListener;
 import org.evenmorefish.dimensionfishing.common.HookManager;
+import org.evenmorefish.dimensionfishing.hooks.evenmorefish.LavaFishingProcessor;
 import org.jetbrains.annotations.NotNull;
 
 public class DimensionFishing extends JavaPlugin {
@@ -32,6 +33,8 @@ public class DimensionFishing extends JavaPlugin {
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(FishingListener.getInstance(), this);
         HookManager.getInstance().load();
+
+        Bukkit.getPluginManager().registerEvents(new LavaFishingProcessor(), this);
     }
 
     @Override
