@@ -9,10 +9,15 @@ repositories {
     mavenCentral()
     gradlePluginPortal()
     maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://repo.codemc.io/repository/EvenMoreFish/")
 }
 
 dependencies {
     compileOnly(libs.paper.api)
+    compileOnly(libs.evenmorefish) {
+        exclude("de.tr7zw", "item-nbt-api")
+        exclude("com.github.Anon8281", "UniversalScheduler")
+    }
 }
 
 group = "org.evenmorefish"
