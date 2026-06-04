@@ -2,6 +2,7 @@ package org.evenmorefish.dimensionfishing;
 
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Fish;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.evenmorefish.dimensionfishing.common.FishingListener;
 import org.evenmorefish.dimensionfishing.common.HookManager;
@@ -31,7 +32,7 @@ public class DimensionFishing extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Bukkit.getPluginManager().registerEvents(FishingListener.getInstance(), this);
+        Bukkit.getPluginManager().registerEvents(new FishingListener(), this);
         HookManager.getInstance().load();
 
         Bukkit.getPluginManager().registerEvents(new LavaFishingProcessor(), this);
@@ -39,7 +40,6 @@ public class DimensionFishing extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        FishingListener.getInstance().shutdown();
         HookManager.getInstance().shutdown();
     }
 

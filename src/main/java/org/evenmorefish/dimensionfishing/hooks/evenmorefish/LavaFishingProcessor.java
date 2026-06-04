@@ -21,6 +21,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.evenmorefish.dimensionfishing.common.TrackedHook;
 import org.evenmorefish.dimensionfishing.events.LavaFishCaughtEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,10 +35,10 @@ public class LavaFishingProcessor extends Processor<LavaFishCaughtEvent> impleme
     @Override
     @EventHandler(priority = EventPriority.HIGHEST)
     public void process(@NotNull LavaFishCaughtEvent event) {
-        PlayerFishEvent original = event.getOriginalEvent();
-        Player player = original.getPlayer();
+        TrackedHook hook = event.getTrackedHook();
+        Player player = hook.getPlayer();
 
-        ItemStack rod = getRod(original);
+        ItemStack rod = getRod(player);
         if (rod == null) {
             plugin.debug("Fishing blocked: could not find rod.");
             return;
@@ -53,7 +54,7 @@ public class LavaFishingProcessor extends Processor<LavaFishCaughtEvent> impleme
             return;
         }
 
-        ItemStack fish = getCaughtItem(player, original.getHook().getLocation(), rod);
+        ItemStack fish = getCaughtItem(player, hook.getFishHook().getLocation(), rod);
 
         if (fish == null) {
             plugin.debug("Could not obtain fish.");
@@ -107,9 +108,7 @@ public class LavaFishingProcessor extends Processor<LavaFishCaughtEvent> impleme
             || fish.getCatchType().equals(CatchType.BOTH);
     }
 
-    private @Nullable ItemStack getRod(@NotNull PlayerFishEvent event) {
-        Player player = event.getPlayer();
-
+    private @Nullable ItemStack getRod(@NotNull Player player) {
         // Fallback: check both hands for a rod
         ItemStack mainHand = player.getInventory().getItem(EquipmentSlot.HAND);
         if (mainHand.getType() == Material.FISHING_ROD) {
