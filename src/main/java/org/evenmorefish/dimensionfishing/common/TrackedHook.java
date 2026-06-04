@@ -15,6 +15,7 @@ import org.evenmorefish.dimensionfishing.config.MainConfig;
 import org.evenmorefish.dimensionfishing.enums.CatchState;
 import org.evenmorefish.dimensionfishing.enums.FishingState;
 import org.evenmorefish.dimensionfishing.events.LavaFishCaughtEvent;
+import org.evenmorefish.dimensionfishing.events.VoidFishCaughtEvent;
 import org.evenmorefish.dimensionfishing.util.Keys;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -135,7 +136,7 @@ public class TrackedHook {
         player.sendPlainMessage("Successfully caught fish. Firing events.");
         switch (fishingState) {
             case LAVA -> new LavaFishCaughtEvent(this).callEvent();
-            //case VOID -> new VoidFishCaughtEvent(this).callEvent();
+            case VOID -> new VoidFishCaughtEvent(this).callEvent();
             case NONE -> {}
         }
     }
