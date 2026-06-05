@@ -11,6 +11,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
+import org.evenmorefish.dimensionfishing.LureTracker;
 import org.evenmorefish.dimensionfishing.config.MainConfig;
 import org.evenmorefish.dimensionfishing.enums.CatchState;
 import org.evenmorefish.dimensionfishing.enums.FishingState;
@@ -29,6 +30,7 @@ public class TrackedHook {
 
     private final FishHook hook;
     private final Player player;
+    private final LureTracker lureTracker;
 
     private FishingState fishingState = FishingState.NONE;
     private CatchState catchState = CatchState.WAIT;
@@ -44,6 +46,7 @@ public class TrackedHook {
         this.player = player;
         this.hook = hook;
         this.voidRequiredLevel = player.getLocation().getBlockY() - RANDOM.nextInt(4, 6);
+        this.lureTracker = new LureTracker(this);
     }
 
     public @NotNull FishHook getFishHook() {
@@ -99,6 +102,7 @@ public class TrackedHook {
                         }
                     }
                     case LURE -> {
+                        lureTracker.tick();
                         lureTime--;
                         if (lureTime <= 0) {
                             player.sendPlainMessage("You can now catch the fish.");
@@ -186,6 +190,18 @@ public class TrackedHook {
 
     public boolean isShouldCustomTick() {
         return this.shouldCustomTick;
+    }
+
+    public int getRemainingWaitTime() {
+        return this.waitTime;
+    }
+
+    public int getRemainingLureTime() {
+        return this.lureTime;
+    }
+
+    public int getRemainingCatchTime() {
+        return this.catchTime;
     }
 
     // ArmorStand shenanigans
