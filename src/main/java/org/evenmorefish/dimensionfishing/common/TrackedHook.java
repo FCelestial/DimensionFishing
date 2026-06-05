@@ -70,7 +70,7 @@ public class TrackedHook {
         if (!shouldCustomTick) {
             return;
         }
-        if (hook.getOwnerUniqueId() == null || !hook.isValid() || isHookedToNormalEntity()) {
+        if (hook.getOwnerUniqueId() == null || !hook.isValid() || hook.isOnGround() || isHookedToNormalEntity()) {
             this.shouldCustomTick = false;
             return;
         }
