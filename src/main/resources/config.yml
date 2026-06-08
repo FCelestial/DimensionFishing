@@ -16,7 +16,5 @@ lava:
   # Amount is the amount shown and can be any valid integer.
   # Color is the color of the particle, and has to be a hex code. Not all particles support this config.
   lure-particles:
-    - particle: FLAME
+    - particle: LAVA
       amount: 3
-    - particle: SMOKE
-      amount: 1
