@@ -196,11 +196,11 @@ public class TrackedHook {
     }
 
     private boolean canLavaFish() {
-        return true; //MainConfig.getInstance().getLavaAllowedWorlds().contains(hook.getWorld().getName());
+        return MainConfig.getInstance().getLavaAllowedWorlds().contains(hook.getWorld().getName());
     }
 
     private boolean canVoidFish() {
-        return true; //MainConfig.getInstance().getVoidAllowedWorlds().contains(hook.getWorld().getName());
+        return MainConfig.getInstance().getVoidAllowedWorlds().contains(hook.getWorld().getName());
     }
 
     public void invalidate() {
