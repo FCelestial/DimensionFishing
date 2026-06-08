@@ -253,6 +253,7 @@ public class TrackedHook {
         stand.setVisualFire(false);
         stand.setPersistent(false);
         stand.setGravity(false);
+        stand.setAI(false);
         stand.getPersistentDataContainer().set(
             Keys.STAND_KEY,
             PersistentDataType.BOOLEAN,
