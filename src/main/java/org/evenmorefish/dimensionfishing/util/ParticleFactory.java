@@ -1,14 +1,15 @@
 package org.evenmorefish.dimensionfishing.util;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import dev.dejvokep.boostedyaml.block.implementation.Section;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HexFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -17,20 +18,18 @@ import java.util.Map;
  */
 public class ParticleFactory {
 
-    private final Section section;
     private final List<ParticleBuilder> particles = new ArrayList<>();
 
-    public ParticleFactory(@NotNull Section section) {
-        this.section = section;
-        loadParticles();
+    public ParticleFactory(@NotNull List<Map<?, ?>> mapList) {
+        loadParticles(mapList);
     }
 
-    private void loadParticles() {
+    private void loadParticles(List<Map<?, ?>> mapList) {
         this.particles.clear();
-        List<Map<?, ?>> lava = section.getMapList("lava");
-        lava.forEach(map -> {
+        mapList.forEach(map -> {
             Particle particle = fetchParticle(map.get("particle"));
             if (particle == null) {
+                System.out.println("Invalid particle :(");
                 return;
             }
             Color color = fetchColor(map.get("color"));
@@ -54,7 +53,7 @@ public class ParticleFactory {
             return null;
         }
         try {
-            return Particle.valueOf(name.toString());
+            return Particle.valueOf(name.toString().toUpperCase());
         } catch (IllegalArgumentException exception) {
             System.out.println(name + " is not a valid particle.");
             return null;
@@ -66,8 +65,11 @@ public class ParticleFactory {
             return null;
         }
         try {
-            int rgb = Integer.parseInt(color.toString(), 16);
-            return Color.fromRGB(rgb);
+            java.awt.Color awtColor = java.awt.Color.decode(color.toString());
+            int r = awtColor.getRed();
+            int g = awtColor.getGreen();
+            int b = awtColor.getBlue();
+            return Color.fromRGB(r, g, b);
         } catch (NumberFormatException exception) {
             System.out.println(color + " is not a valid hex color.");
             return null;

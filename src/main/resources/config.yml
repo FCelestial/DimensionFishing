@@ -1,0 +1,19 @@
+# Configuration for lava fishing.
+lava:
+  # Which worlds is lava fishing enabled in?
+  allowed-worlds:
+    - world_nether
+
+  # Which sound should play when the hook is swallowed by lava?
+  # The hook is swallowed if the fish is not caught in time.
+  swallow-sound: BLOCK_LAVA_EXTINGUISH
+
+  # Which particles should show while the fish is being lured?
+  # Particle can be any of these values: https://jd.papermc.io/paper/26.1.2/org/bukkit/Particle.html
+  # Amount is the amount shown and can be any valid integer.
+  # Color is the color of the particle, and has to be a hex code. Not all particles support this config.
+  lure-particles:
+    - particle: FLAME
+      amount: 3
+    - particle: SMOKE
+      amount: 1

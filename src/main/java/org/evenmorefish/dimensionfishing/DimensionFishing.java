@@ -2,10 +2,11 @@ package org.evenmorefish.dimensionfishing;
 
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Fish;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.evenmorefish.dimensionfishing.commands.MainCommand;
 import org.evenmorefish.dimensionfishing.common.FishingListener;
 import org.evenmorefish.dimensionfishing.common.HookManager;
+import org.evenmorefish.dimensionfishing.config.MainConfig;
 import org.evenmorefish.dimensionfishing.hooks.evenmorefish.LavaFishingProcessor;
 import org.evenmorefish.dimensionfishing.hooks.evenmorefish.VoidFishingProcessor;
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +30,10 @@ public class DimensionFishing extends JavaPlugin {
     }
 
     @Override
-    public void onLoad() {}
+    public void onLoad() {
+        registerCommands();
+        loadConfig();
+    }
 
     @Override
     public void onEnable() {
@@ -47,11 +51,19 @@ public class DimensionFishing extends JavaPlugin {
         HookManager.getInstance().shutdown();
     }
 
+    public void reload() {
+        MainConfig.getInstance().reload();
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
     private void registerCommands() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
-            // Register Brigadier commands here.
-            // commands.registrar().register(new MyCommand().get());
+            commands.registrar().register(MainCommand.get());
         });
+    }
+
+    private void loadConfig() {
+        new MainConfig(this).load();
     }
 
 }

@@ -11,6 +11,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
+import org.evenmorefish.dimensionfishing.DimensionFishing;
 import org.evenmorefish.dimensionfishing.LureTracker;
 import org.evenmorefish.dimensionfishing.config.MainConfig;
 import org.evenmorefish.dimensionfishing.enums.CatchState;
@@ -30,7 +31,7 @@ public class TrackedHook {
 
     private final FishHook hook;
     private final Player player;
-    private final LureTracker lureTracker;
+    private LureTracker lureTracker;
 
     private FishingState fishingState = FishingState.NONE;
     private CatchState catchState = CatchState.WAIT;
@@ -46,7 +47,6 @@ public class TrackedHook {
         this.player = player;
         this.hook = hook;
         this.voidRequiredLevel = player.getLocation().getBlockY() - RANDOM.nextInt(4, 6);
-        this.lureTracker = new LureTracker(this);
     }
 
     public @NotNull FishHook getFishHook() {
@@ -82,10 +82,12 @@ public class TrackedHook {
                 if (isLava()) {
                     attachToStand();
                     this.fishingState = FishingState.LAVA;
+                    this.lureTracker = new LureTracker(this);
                     player.sendPlainMessage("You are now lava fishing.");
                 } else if (isVoid()) {
                     attachToStand();
                     this.fishingState = FishingState.VOID;
+                    this.lureTracker = new LureTracker(this);
                     player.sendPlainMessage("You are now void fishing.");
                 } else if (isWater()) {
                     // If in water, vanilla will handle it.
@@ -102,7 +104,9 @@ public class TrackedHook {
                         }
                     }
                     case LURE -> {
-                        lureTracker.tick();
+                        if (lureTracker != null) {
+                            lureTracker.tick();
+                        }
                         lureTime--;
                         if (lureTime <= 0) {
                             player.sendPlainMessage("You can now catch the fish.");
@@ -115,11 +119,11 @@ public class TrackedHook {
                             switch (fishingState) {
                                 case LAVA -> {
                                     player.sendPlainMessage("Your hook was swallowed by the lava.");
-                                    player.playSound(MainConfig.getInstance().getLavaFishingSwallowSound());
+                                    //player.playSound(MainConfig.getInstance().getLavaFishingSwallowSound());
                                 }
                                 case VOID -> {
                                     player.sendPlainMessage("Your hook was swallowed by the void.");
-                                    player.playSound(MainConfig.getInstance().getVoidFishingSwallowSound());
+                                    //player.playSound(MainConfig.getInstance().getVoidFishingSwallowSound());
                                 }
                             }
                             invalidate();
@@ -171,11 +175,11 @@ public class TrackedHook {
     }
 
     private boolean canLavaFish() {
-        return MainConfig.getInstance().getLavaAllowedWorlds().contains(hook.getWorld().getName());
+        return true; //MainConfig.getInstance().getLavaAllowedWorlds().contains(hook.getWorld().getName());
     }
 
     private boolean canVoidFish() {
-        return MainConfig.getInstance().getVoidAllowedWorlds().contains(hook.getWorld().getName());
+        return true; //MainConfig.getInstance().getVoidAllowedWorlds().contains(hook.getWorld().getName());
     }
 
     public void invalidate() {
