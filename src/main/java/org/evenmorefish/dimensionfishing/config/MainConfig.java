@@ -68,6 +68,30 @@ public class MainConfig {
         return Sound.sound().type(org.bukkit.Sound.ENTITY_ENDERMAN_TELEPORT).build();
     }
 
+    public Sound getLavaFishingSplashSound() {
+        Sound sound = SoundSerializer.deserialize(config.getString("lava.splash-sound"));
+        if (sound != null) {
+            return sound;
+        }
+        return Sound.sound()
+            .type(org.bukkit.Sound.ENTITY_FISHING_BOBBER_SPLASH)
+            .volume(0.25F)
+            .pitch(0.5F)
+            .build();
+    }
+
+    public Sound getVoidFishingSplashSound() {
+        Sound sound = SoundSerializer.deserialize(config.getString("void.splash-sound"));
+        if (sound != null) {
+            return sound;
+        }
+        return Sound.sound()
+            .type(org.bukkit.Sound.ENTITY_FISHING_BOBBER_SPLASH)
+            .volume(0.25F)
+            .pitch(0.1F)
+            .build();
+    }
+
     public ParticleFactory getLavaFishingLureParticles() {
         return this.lavaLureParticles;
     }

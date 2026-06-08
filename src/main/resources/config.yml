@@ -8,6 +8,9 @@ lava:
   # The hook is swallowed if the fish is not caught in time.
   swallow-sound: BLOCK_LAVA_EXTINGUISH
 
+  # Which sound should play when the hook splashes into the lava?
+  splash-sound: ENTITY_FISHING_BOBBER_SPLASH,0.25,0.5
+
   # Which particles should show while the fish is being lured?
   # Particle can be any of these values: https://jd.papermc.io/paper/26.1.2/org/bukkit/Particle.html
   # Amount is the amount shown and can be any valid integer.

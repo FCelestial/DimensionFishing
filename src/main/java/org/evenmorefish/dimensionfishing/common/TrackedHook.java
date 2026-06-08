@@ -1,5 +1,6 @@
 package org.evenmorefish.dimensionfishing.common;
 
+import io.papermc.paper.entity.TeleportFlag;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -43,6 +44,10 @@ public class TrackedHook {
     private int lureTime = 40;
     private int catchTime = 40;
 
+    // The duration of ticks the hook should be "pulled" by a fish for.
+    private boolean pulled = false;
+    private int pullTime = 5;
+
     public TrackedHook(@NotNull Player player, @NotNull FishHook hook) {
         this.player = player;
         this.hook = hook;
@@ -77,6 +82,16 @@ public class TrackedHook {
             this.shouldCustomTick = false;
             return;
         }
+
+        if (pulled) {
+            if (pullTime > 0) {
+                pullTime--;
+            } else {
+                stand.teleport(stand.getLocation().add(0, 0.3, 0));
+                pulled = false;
+            }
+        }
+
         switch (fishingState) {
             case NONE -> {
                 if (isLava()) {
@@ -110,6 +125,12 @@ public class TrackedHook {
                         lureTime--;
                         if (lureTime <= 0) {
                             player.sendPlainMessage("You can now catch the fish.");
+                            switch (fishingState) {
+                                case LAVA -> player.playSound(MainConfig.getInstance().getLavaFishingSplashSound());
+                                case VOID -> player.playSound(MainConfig.getInstance().getVoidFishingSplashSound());
+                            }
+                            stand.teleport(stand.getLocation().add(0, -0.3, 0));
+                            pulled = true;
                             catchState = CatchState.CATCH;
                         }
                     }
@@ -119,11 +140,11 @@ public class TrackedHook {
                             switch (fishingState) {
                                 case LAVA -> {
                                     player.sendPlainMessage("Your hook was swallowed by the lava.");
-                                    //player.playSound(MainConfig.getInstance().getLavaFishingSwallowSound());
+                                    player.playSound(MainConfig.getInstance().getLavaFishingSwallowSound());
                                 }
                                 case VOID -> {
                                     player.sendPlainMessage("Your hook was swallowed by the void.");
-                                    //player.playSound(MainConfig.getInstance().getVoidFishingSwallowSound());
+                                    player.playSound(MainConfig.getInstance().getVoidFishingSwallowSound());
                                 }
                             }
                             invalidate();
