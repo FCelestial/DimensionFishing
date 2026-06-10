@@ -40,18 +40,22 @@ public class TrackedHook {
     private boolean shouldCustomTick = true;
     private final int voidRequiredLevel;
 
-    private int waitTime = 40;
-    private int lureTime = 40;
+    private int waitTime = 0;
+    private int lureTime = 0;
     private int catchTime = 40;
 
     // The duration of ticks the hook should be "pulled" by a fish for.
     private boolean pulled = false;
     private int pullTime = 5;
 
-    public TrackedHook(@NotNull Player player, @NotNull FishHook hook) {
+    public TrackedHook(@NotNull Player player, @NotNull FishHook hook, int lureLevel) {
         this.player = player;
         this.hook = hook;
         this.voidRequiredLevel = player.getLocation().getBlockY() - RANDOM.nextInt(4, 6);
+
+        this.waitTime = fetchWaitTime(lureLevel);
+        // TODO this is flawed somehow. way faster than vanilla.
+        this.lureTime = RANDOM.nextInt(hook.getMinLureTime(), hook.getMaxLureTime());
     }
 
     public @NotNull FishHook getFishHook() {
@@ -269,6 +273,17 @@ public class TrackedHook {
         // For debug only. Remove when published.
         stand.setGlowing(true);
         return stand;
+    }
+
+    private int fetchWaitTime(int lureLevel) {
+        int ticksPerLureLevel = 100;
+        int reduceTicks = (lureLevel * ticksPerLureLevel);
+        int maxWaitTime = Math.max(0, hook.getMaxWaitTime() - reduceTicks);
+        int minWaitTime = Math.max(0, hook.getMinWaitTime() - reduceTicks);
+
+        int waitTime = minWaitTime == maxWaitTime ? minWaitTime : RANDOM.nextInt(minWaitTime, maxWaitTime);
+        System.out.println("Calculated Wait Time: " + waitTime);
+        return waitTime;
     }
 
 }

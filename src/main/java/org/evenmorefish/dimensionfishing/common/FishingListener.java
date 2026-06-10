@@ -1,12 +1,19 @@
 package org.evenmorefish.dimensionfishing.common;
 
 import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FishHook;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
+import org.checkerframework.checker.units.qual.N;
 import org.evenmorefish.dimensionfishing.util.Keys;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class FishingListener implements Listener {
 
@@ -14,7 +21,8 @@ public class FishingListener implements Listener {
     public void onFish(PlayerFishEvent event) {
         switch (event.getState()) {
             case FISHING -> {
-                TrackedHook hook = new TrackedHook(event.getPlayer(), event.getHook());
+                int lureLevel = fetchLureLevel(event.getPlayer(), event.getHand());
+                TrackedHook hook = new TrackedHook(event.getPlayer(), event.getHook(), lureLevel);
                 if (!hook.shouldStartCustomTick()) {
                     return;
                 }
@@ -36,6 +44,14 @@ public class FishingListener implements Listener {
             System.out.println("Removing armor stand because the hook was removed from the world.");
             hooked.remove();
         }
+    }
+
+    private int fetchLureLevel(@NotNull Player player, @Nullable EquipmentSlot slot) {
+        if (slot == null) {
+            return 0;
+        }
+        ItemStack item = player.getInventory().getItem(slot);
+        return item.getEnchantmentLevel(Enchantment.LURE);
     }
 
 }
