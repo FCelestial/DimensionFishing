@@ -1,4 +1,4 @@
-package org.evenmorefish.dimensionfishing.enums;
+package org.evenmorefish.dimensionfishing.state;
 
 public enum CatchState {
     WAIT,

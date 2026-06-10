@@ -33,11 +33,7 @@ public class LureTracker {
         this.startLocation = DirectionUtil.forwardFlat(hookLocation, distance);
         this.currentLocation = this.startLocation;
 
-        this.particles = switch (hook.getFishingState()) {
-            case LAVA -> MainConfig.getInstance().getLavaFishingLureParticles();
-            case VOID -> MainConfig.getInstance().getVoidFishingLureParticles();
-            default -> null;
-        };
+        this.particles = hook.getFishingState().getLureParticles();
     }
 
     public void tick() {

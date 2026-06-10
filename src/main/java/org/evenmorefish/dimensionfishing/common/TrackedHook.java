@@ -15,10 +15,13 @@ import org.bukkit.persistence.PersistentDataType;
 import org.evenmorefish.dimensionfishing.DimensionFishing;
 import org.evenmorefish.dimensionfishing.LureTracker;
 import org.evenmorefish.dimensionfishing.config.MainConfig;
-import org.evenmorefish.dimensionfishing.enums.CatchState;
-import org.evenmorefish.dimensionfishing.enums.FishingState;
 import org.evenmorefish.dimensionfishing.events.LavaFishCaughtEvent;
 import org.evenmorefish.dimensionfishing.events.VoidFishCaughtEvent;
+import org.evenmorefish.dimensionfishing.state.CatchState;
+import org.evenmorefish.dimensionfishing.state.FishingState;
+import org.evenmorefish.dimensionfishing.state.impl.LavaFishingState;
+import org.evenmorefish.dimensionfishing.state.impl.NoneFishingState;
+import org.evenmorefish.dimensionfishing.state.impl.VoidFishingState;
 import org.evenmorefish.dimensionfishing.util.Keys;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -96,64 +99,51 @@ public class TrackedHook {
             }
         }
 
-        switch (fishingState) {
-            case NONE -> {
-                if (isLava()) {
-                    attachToStand();
-                    this.fishingState = FishingState.LAVA;
-                    this.lureTracker = new LureTracker(this);
-                    player.sendPlainMessage("You are now lava fishing.");
-                } else if (isVoid()) {
-                    attachToStand();
-                    this.fishingState = FishingState.VOID;
-                    this.lureTracker = new LureTracker(this);
-                    player.sendPlainMessage("You are now void fishing.");
-                } else if (isWater()) {
-                    // If in water, vanilla will handle it.
-                    this.shouldCustomTick = false;
+        if (fishingState instanceof NoneFishingState) {
+            if (isLava()) {
+                attachToStand();
+                this.fishingState = FishingState.LAVA;
+                this.lureTracker = new LureTracker(this);
+                player.sendPlainMessage("You are now lava fishing.");
+            } else if (isVoid()) {
+                attachToStand();
+                this.fishingState = FishingState.VOID;
+                this.lureTracker = new LureTracker(this);
+                player.sendPlainMessage("You are now void fishing.");
+            } else if (isWater()) {
+                // If in water, vanilla will handle it.
+                this.shouldCustomTick = false;
+            }
+            return;
+        }
+
+        switch (catchState) {
+            case WAIT -> {
+                waitTime--;
+                if (waitTime <= 0) {
+                    player.sendPlainMessage("Fish is being lured.");
+                    catchState = CatchState.LURE;
                 }
             }
-            case LAVA, VOID -> {
-                switch (catchState) {
-                    case WAIT -> {
-                        waitTime--;
-                        if (waitTime <= 0) {
-                            player.sendPlainMessage("Fish is being lured.");
-                            catchState = CatchState.LURE;
-                        }
-                    }
-                    case LURE -> {
-                        if (lureTracker != null) {
-                            lureTracker.tick();
-                        }
-                        lureTime--;
-                        if (lureTime <= 0) {
-                            player.sendPlainMessage("You can now catch the fish.");
-                            switch (fishingState) {
-                                case LAVA -> player.playSound(MainConfig.getInstance().getLavaFishingSplashSound());
-                                case VOID -> player.playSound(MainConfig.getInstance().getVoidFishingSplashSound());
-                            }
-                            stand.teleport(stand.getLocation().add(0, -0.3, 0));
-                            pulled = true;
-                            catchState = CatchState.CATCH;
-                        }
-                    }
-                    case CATCH -> {
-                        catchTime--;
-                        if (catchTime <= 0) {
-                            switch (fishingState) {
-                                case LAVA -> {
-                                    player.sendPlainMessage("Your hook was swallowed by the lava.");
-                                    player.playSound(MainConfig.getInstance().getLavaFishingSwallowSound());
-                                }
-                                case VOID -> {
-                                    player.sendPlainMessage("Your hook was swallowed by the void.");
-                                    player.playSound(MainConfig.getInstance().getVoidFishingSwallowSound());
-                                }
-                            }
-                            invalidate();
-                        }
-                    }
+            case LURE -> {
+                if (lureTracker != null) {
+                    lureTracker.tick();
+                }
+                lureTime--;
+                if (lureTime <= 0) {
+                    player.sendPlainMessage("You can now catch the fish.");
+                    fishingState.playSplashSound(player);
+                    stand.teleport(stand.getLocation().add(0, -0.3, 0));
+                    pulled = true;
+                    catchState = CatchState.CATCH;
+                }
+            }
+            case CATCH -> {
+                catchTime--;
+                if (catchTime <= 0) {
+                    player.sendPlainMessage("Your hook was swallowed.");
+                    fishingState.playSwallowSound(player);
+                    invalidate();
                 }
             }
         }
@@ -167,11 +157,7 @@ public class TrackedHook {
             return;
         }
         player.sendPlainMessage("Successfully caught fish. Firing events.");
-        switch (fishingState) {
-            case LAVA -> new LavaFishCaughtEvent(this).callEvent();
-            case VOID -> new VoidFishCaughtEvent(this).callEvent();
-            case NONE -> {}
-        }
+        fishingState.callEvent(this);
     }
 
     private boolean isHookedToNormalEntity() {

@@ -1,4 +1,1 @@
-- calculate timing of wait and lure
-- possibly make that behavior configurable
 - add proper messages using MessageLib (with Legacy colors disabled.)
-- Move some stuff to the FishingState enum to avoid redundant switch statements.

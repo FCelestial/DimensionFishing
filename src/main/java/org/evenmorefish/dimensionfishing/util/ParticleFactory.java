@@ -20,6 +20,8 @@ public class ParticleFactory {
 
     private final List<ParticleBuilder> particles = new ArrayList<>();
 
+    public ParticleFactory() {}
+
     public ParticleFactory(@NotNull List<Map<?, ?>> mapList) {
         loadParticles(mapList);
     }
