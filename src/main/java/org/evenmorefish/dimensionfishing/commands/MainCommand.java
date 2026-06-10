@@ -5,12 +5,14 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.evenmorefish.dimensionfishing.DimensionFishing;
+import org.evenmorefish.dimensionfishing.config.MainConfig;
 
 @SuppressWarnings("UnstableApiUsage")
 public class MainCommand {
 
     public static LiteralCommandNode<CommandSourceStack> get() {
         return Commands.literal("dimensionfishing")
+            .requires(stack -> stack.getSender().hasPermission("dimensionfishing.command"))
             .then(reload())
             .build();
     }
@@ -19,7 +21,7 @@ public class MainCommand {
         return Commands.literal("reload")
             .executes(ctx -> {
                 DimensionFishing.getInstance().reload();
-                ctx.getSource().getSender().sendPlainMessage("[DimensionFishing] Successfully reloaded the plugin.");
+                ctx.getSource().getSender().sendMessage(MainConfig.getInstance().getReloadMessage());
                 return 1;
             });
     }

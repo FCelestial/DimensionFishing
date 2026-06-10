@@ -1,1 +1,0 @@
-- add proper messages using MessageLib (with Legacy colors disabled.)

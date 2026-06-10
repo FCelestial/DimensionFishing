@@ -1,3 +1,6 @@
+# The plugin's reload message. This is the only message in the plugin.
+reload-message: "<gradient:#E6F9FF:#8FD9FB>[DimensionFishing] <white>Successfully reloaded the plugin."
+
 # Configuration for lava fishing.
 lava:
   # Which worlds is lava fishing enabled in?

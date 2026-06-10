@@ -1,6 +1,8 @@
 package org.evenmorefish.dimensionfishing.config;
 
 import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.evenmorefish.dimensionfishing.DimensionFishing;
 import org.evenmorefish.dimensionfishing.util.ParticleFactory;
@@ -42,6 +44,14 @@ public class MainConfig {
             throw new IllegalStateException("MainConfig is not loaded.");
         }
         return INSTANCE;
+    }
+
+    public @NotNull Component getReloadMessage() {
+        String message = config.getString(
+            "reload-message",
+            "<gradient:#E6F9FF:#8FD9FB>[DimensionFishing] <white>Successfully reloaded the plugin."
+        );
+        return MiniMessage.miniMessage().deserialize(message);
     }
 
     public List<String> getLavaAllowedWorlds() {
