@@ -53,8 +53,8 @@ public class TrackedHook {
         this.hook = hook;
         this.voidRequiredLevel = player.getLocation().getBlockY() - RANDOM.nextInt(4, 6);
 
+        // Calculating lure and wait time. Unfortunately the Bukkit API doesn't apply lure so we have to do it ourselves :D
         this.waitTime = fetchWaitTime(lureLevel);
-        // TODO this is flawed somehow. way faster than vanilla.
         this.lureTime = RANDOM.nextInt(hook.getMinLureTime(), hook.getMaxLureTime());
     }
 
@@ -281,7 +281,7 @@ public class TrackedHook {
         int maxWaitTime = Math.max(0, hook.getMaxWaitTime() - reduceTicks);
         int minWaitTime = Math.max(0, hook.getMinWaitTime() - reduceTicks);
 
-        int waitTime = minWaitTime == maxWaitTime ? minWaitTime : RANDOM.nextInt(minWaitTime, maxWaitTime);
+        int waitTime = (minWaitTime == maxWaitTime) ? minWaitTime : RANDOM.nextInt(minWaitTime, maxWaitTime);
         System.out.println("Calculated Wait Time: " + waitTime);
         return waitTime;
     }
