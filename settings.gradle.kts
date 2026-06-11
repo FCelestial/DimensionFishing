@@ -5,7 +5,7 @@ dependencyResolutionManagement {
         create("libs") {
             // compileOnly dependencies
             library("paper-api", "io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
-            library("evenmorefish", "com.oheers.evenmorefish:even-more-fish-plugin:2.3.4")
+            library("evenmorefish", "com.oheers.evenmorefish:even-more-fish-plugin:2.3.6-SNAPSHOT")
 
             // implementation dependencies
 

@@ -5,6 +5,7 @@ import com.oheers.fish.EvenMoreFish;
 import com.oheers.fish.FishUtils;
 import com.oheers.fish.api.events.EMFFishCaughtEvent;
 import com.oheers.fish.api.fishing.CatchType;
+import com.oheers.fish.api.fishing.FishingType;
 import com.oheers.fish.competition.Competition;
 import com.oheers.fish.config.MainConfig;
 import com.oheers.fish.fishing.Processor;
@@ -31,6 +32,10 @@ import java.time.LocalDateTime;
 public class LavaFishingProcessor extends Processor<LavaFishCaughtEvent> implements Listener {
 
     private final EvenMoreFish plugin = EvenMoreFish.getInstance();
+
+    public LavaFishingProcessor() {
+        super(FishingType.LAVA);
+    }
 
     @Override
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -81,7 +86,6 @@ public class LavaFishingProcessor extends Processor<LavaFishCaughtEvent> impleme
         return !MainConfig.getInstance().isFishCatchOnlyInCompetition();
     }
 
-    @SuppressWarnings("UnstableApiUsage")
     @Override
     protected boolean fireEvent(@NotNull Fish fish, @NotNull Player player) {
         return new EMFFishCaughtEvent(fish, player, LocalDateTime.now()).callEvent();

@@ -6,10 +6,11 @@ plugins {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     gradlePluginPortal()
     maven("https://repo.papermc.io/repository/maven-public/")
-    maven("https://repo.codemc.io/repository/EvenMoreFish/")
+    //maven("https://repo.codemc.io/repository/EvenMoreFish/")
 }
 
 dependencies {
@@ -52,5 +53,32 @@ tasks {
     }
     generateBukkitPluginDescription {
         useGoogleMavenCentralProxy()
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            url = uri("https://repo.codemc.io/repository/EvenMoreFish/")
+
+            val mavenUsername = System.getenv("JENKINS_USERNAME")
+            val mavenPassword = System.getenv("JENKINS_PASSWORD")
+
+            if (mavenUsername != null && mavenPassword != null) {
+                credentials {
+                    username = mavenUsername
+                    password = mavenPassword
+                }
+            }
+        }
+    }
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = project.group.toString()
+            artifactId = rootProject.name
+            version = project.version.toString()
+
+            from(components["java"])
+        }
     }
 }
