@@ -30,4 +30,10 @@ public class LavaFishingState implements FishingState {
         new LavaFishCaughtEvent(hook).callEvent();
     }
 
+    @Override
+    public boolean checkPermission(@NonNull Player player) {
+        String permission = MainConfig.getInstance().getLavaFishingPermission();
+        return permission == null || player.hasPermission(permission);
+    }
+
 }

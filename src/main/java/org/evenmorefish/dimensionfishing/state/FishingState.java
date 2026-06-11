@@ -24,4 +24,6 @@ public interface FishingState {
 
     void callEvent(@NotNull TrackedHook hook);
 
+    boolean checkPermission(@NotNull Player player);
+
 }

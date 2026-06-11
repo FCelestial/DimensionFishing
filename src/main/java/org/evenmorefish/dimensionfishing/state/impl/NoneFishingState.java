@@ -11,8 +11,7 @@ public class NoneFishingState implements FishingState {
     private final ParticleFactory lureParticles = new ParticleFactory();
 
     @Override
-    public void playBiteSound(@NonNull Player player) {
-    }
+    public void playBiteSound(@NonNull Player player) {}
 
     @Override
     public void playSwallowSound(@NonNull Player player) {}
@@ -24,5 +23,10 @@ public class NoneFishingState implements FishingState {
 
     @Override
     public void callEvent(@NonNull TrackedHook hook) {}
+
+    @Override
+    public boolean checkPermission(@NonNull Player player) {
+        return true;
+    }
 
 }

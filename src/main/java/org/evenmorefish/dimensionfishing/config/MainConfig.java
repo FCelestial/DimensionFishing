@@ -90,6 +90,14 @@ public class MainConfig {
             .build();
     }
 
+    public String getLavaFishingPermission() {
+        return config.getString("lava.permission");
+    }
+
+    public String getVoidFishingPermission() {
+        return config.getString("void.permission");
+    }
+
     public Sound getVoidFishingBiteSound() {
         Sound sound = SoundSerializer.deserialize(config.getString("void.bite-sound"));
         if (sound != null) {

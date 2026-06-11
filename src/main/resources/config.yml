@@ -3,6 +3,9 @@ reload-message: "<gradient:#E6F9FF:#8FD9FB>[DimensionFishing] <white>Successfull
 
 # Configuration for lava fishing.
 lava:
+  # The permission the player needs to fish in lava.
+  permission: []
+
   # Which worlds is lava fishing enabled in?
   allowed-worlds:
     - world_nether
@@ -22,6 +25,9 @@ lava:
 
 # Configuration for void fishing.
 void:
+  # The permission the player needs to fish in the void.
+  permission: []
+
   # Which worlds is void fishing enabled in?
   allowed-worlds:
     - world_the_end

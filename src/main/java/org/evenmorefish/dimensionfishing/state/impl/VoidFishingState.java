@@ -30,4 +30,10 @@ public class VoidFishingState implements FishingState {
         new VoidFishCaughtEvent(hook).callEvent();
     }
 
+    @Override
+    public boolean checkPermission(@NonNull Player player) {
+        String permission = MainConfig.getInstance().getVoidFishingPermission();
+        return permission == null || player.hasPermission(permission);
+    }
+
 }
