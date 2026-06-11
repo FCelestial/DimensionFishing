@@ -41,7 +41,6 @@ public class FishingListener implements Listener {
         }
         Entity hooked = hook.getHookedEntity();
         if (hooked != null && hooked.getPersistentDataContainer().has(Keys.STAND_KEY)) {
-            System.out.println("Removing armor stand because the hook was removed from the world.");
             hooked.remove();
         }
     }

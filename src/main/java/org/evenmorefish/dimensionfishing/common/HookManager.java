@@ -63,11 +63,9 @@ public class HookManager {
         if (entity.getPersistentDataContainer().has(Keys.STAND_KEY)) {
             TrackedHook tracked = trackedHooks.remove(event.getHook().getUniqueId());
             if (tracked == null) {
-                System.out.println("No hook tracked?");
                 return;
             }
             tracked.reel();
-            event.getPlayer().sendPlainMessage("Reeled in armor stand");
             event.setCancelled(true);
         }
     }

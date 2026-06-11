@@ -98,12 +98,10 @@ public class TrackedHook {
                 attachToStand();
                 this.fishingState = FishingState.LAVA;
                 this.lureTracker = new LureTracker(this);
-                player.sendPlainMessage("You are now lava fishing.");
             } else if (isVoid()) {
                 attachToStand();
                 this.fishingState = FishingState.VOID;
                 this.lureTracker = new LureTracker(this);
-                player.sendPlainMessage("You are now void fishing.");
             } else if (isWater()) {
                 // If in water, vanilla will handle it.
                 this.shouldCustomTick = false;
@@ -115,7 +113,6 @@ public class TrackedHook {
             case WAIT -> {
                 waitTime--;
                 if (waitTime <= 0) {
-                    player.sendPlainMessage("Fish is being lured.");
                     catchState = CatchState.LURE;
                 }
             }
@@ -125,7 +122,6 @@ public class TrackedHook {
                 }
                 lureTime--;
                 if (lureTime <= 0) {
-                    player.sendPlainMessage("You can now catch the fish.");
                     fishingState.playBiteSound(player);
                     stand.teleport(stand.getLocation().add(0, -0.3, 0));
                     pulled = true;
@@ -135,7 +131,6 @@ public class TrackedHook {
             case CATCH -> {
                 catchTime--;
                 if (catchTime <= 0) {
-                    player.sendPlainMessage("Your hook was swallowed.");
                     fishingState.playSwallowSound(player);
                     invalidate();
                 }
@@ -147,10 +142,8 @@ public class TrackedHook {
         this.shouldCustomTick = false;
         this.invalidate();
         if (catchState != CatchState.CATCH) {
-            player.sendPlainMessage("Fish was not ready to be caught.");
             return;
         }
-        player.sendPlainMessage("Successfully caught fish. Firing events.");
         fishingState.callEvent(this);
     }
 
@@ -163,19 +156,14 @@ public class TrackedHook {
     }
 
     private boolean isLava() {
-        System.out.println(canLavaFish() ? "Can lava fish" : "Cannot lava fish");
-        System.out.println(hook.getLocation().getBlock().getType() == Material.LAVA ? "Was lava" : "Was not lava");
         return canLavaFish() && hook.getLocation().getBlock().getType() == Material.LAVA;
     }
 
     private boolean isWater() {
-        System.out.println(hook.getLocation().getBlock().getType() == Material.WATER ? "Was water" : "Was not water");
         return hook.getLocation().getBlock().getType() == Material.WATER;
     }
 
     private boolean isVoid() {
-        System.out.println(canVoidFish() ? "Can void fish" : "Cannot void fish");
-        System.out.println(hook.getLocation().getBlockY() <= voidRequiredLevel ? "Was void" : "Was not void");
         return canVoidFish() && hook.getLocation().getBlockY() <= voidRequiredLevel;
     }
 
@@ -217,17 +205,14 @@ public class TrackedHook {
 
     private void attachToStand() {
         if (this.stand != null) {
-            System.out.println("Stand already existed?");
             return;
         }
-        System.out.println("Spawning armor stand");
         ArmorStand stand = createNewStand(hook.getLocation());
         hook.setHookedEntity(stand);
         stand.addPassenger(hook);
         hook.setVisualFire(false);
         hook.setFireTicks(0);
         this.stand = stand;
-        Bukkit.broadcast(Component.text("Hook is now attached to armor stand."));
     }
 
     private ArmorStand createNewStand(@NonNull Location location) {
@@ -262,7 +247,6 @@ public class TrackedHook {
         int minWaitTime = Math.max(0, hook.getMinWaitTime() - reduceTicks);
 
         int waitTime = (minWaitTime == maxWaitTime) ? minWaitTime : RANDOM.nextInt(minWaitTime, maxWaitTime);
-        System.out.println("Calculated Wait Time: " + waitTime);
         return waitTime;
     }
 

@@ -3,6 +3,7 @@ package org.evenmorefish.dimensionfishing.util.serializer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import org.bukkit.NamespacedKey;
+import org.evenmorefish.dimensionfishing.DimensionFishing;
 import org.jspecify.annotations.Nullable;
 
 public class SoundSerializer {
@@ -24,7 +25,7 @@ public class SoundSerializer {
         }
         Sound.Builder sound = resolveSoundType(split[0]);
         if (sound == null) {
-            System.out.println(split[0] + " is not a valid sound.");
+            DimensionFishing.getInstance().getLogger().warning(split[0] + " is not a valid sound.");
             return null;
         }
         try {
@@ -46,12 +47,10 @@ public class SoundSerializer {
         }
         Key soundKey = NamespacedKey.fromString(type);
         if (soundKey != null) {
-            System.out.println("Resolved sound key.");
             return Sound.sound().type(soundKey);
         }
         try {
             org.bukkit.Sound soundEnum = org.bukkit.Sound.valueOf(type);
-            System.out.println("Resolved sound enum.");
             return Sound.sound().type(soundEnum);
         } catch (IllegalArgumentException exception) {
             return null;
