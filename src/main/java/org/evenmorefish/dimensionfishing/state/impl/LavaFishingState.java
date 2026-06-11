@@ -11,8 +11,8 @@ import org.jspecify.annotations.NonNull;
 public class LavaFishingState implements FishingState {
 
     @Override
-    public void playSplashSound(@NonNull Player player) {
-        player.playSound(MainConfig.getInstance().getLavaFishingSplashSound());
+    public void playBiteSound(@NonNull Player player) {
+        player.playSound(MainConfig.getInstance().getLavaFishingBiteSound());
     }
 
     @Override

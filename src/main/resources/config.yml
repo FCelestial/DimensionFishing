@@ -11,13 +11,31 @@ lava:
   # The hook is swallowed if the fish is not caught in time.
   swallow-sound: BLOCK_LAVA_EXTINGUISH
 
-  # Which sound should play when the hook splashes into the lava?
-  splash-sound: ENTITY_FISHING_BOBBER_SPLASH,0.25,0.5
+  # Which sound should play when the hook is bitten by a fish?
+  bite-sound: ENTITY_FISHING_BOBBER_SPLASH,0.25,0.5
 
   # Which particles should show while the fish is being lured?
-  # Particle can be any of these values: https://jd.papermc.io/paper/26.1.2/org/bukkit/Particle.html
-  # Amount is the amount shown and can be any valid integer.
-  # Color is the color of the particle, and has to be a hex code. Not all particles support this config.
+  # See [wiki doesn't exist yet] for a full explanation of this config.
   lure-particles:
     - particle: LAVA
       amount: 3
+
+# Configuration for void fishing.
+void:
+  # Which worlds is void fishing enabled in?
+  allowed-worlds:
+    - world_the_end
+
+  # Which sound should play when the hook is swallowed by the void?
+  # The hook is swallowed if the fish is not caught in time.
+  swallow-sound: ENTITY_ENDERMAN_TELEPORT,0.25,0.1
+
+  # Which sound should play when the hook is bitten by a fish?
+  bite-sound: ENTITY_FOX_BITE,0.25,0.1
+
+  # Which particles should show while the fish is being lured?
+  # See [wiki doesn't exist yet] for a full explanation of this config.
+  lure-particles:
+    - particle: DUST
+      amount: 3
+      color: "#FF55FF"

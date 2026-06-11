@@ -16,7 +16,7 @@ public interface FishingState {
     LavaFishingState LAVA = new LavaFishingState();
     VoidFishingState VOID = new VoidFishingState();
 
-    void playSplashSound(@NotNull Player player);
+    void playBiteSound(@NotNull Player player);
 
     void playSwallowSound(@NotNull Player player);
 

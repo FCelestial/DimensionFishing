@@ -11,8 +11,8 @@ import org.jspecify.annotations.NonNull;
 public class VoidFishingState implements FishingState {
 
     @Override
-    public void playSplashSound(@NonNull Player player) {
-        player.playSound(MainConfig.getInstance().getVoidFishingSplashSound());
+    public void playBiteSound(@NonNull Player player) {
+        player.playSound(MainConfig.getInstance().getVoidFishingBiteSound());
     }
 
     @Override

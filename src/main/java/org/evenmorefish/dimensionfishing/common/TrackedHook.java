@@ -1,6 +1,5 @@
 package org.evenmorefish.dimensionfishing.common;
 
-import io.papermc.paper.entity.TeleportFlag;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -12,16 +11,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
-import org.evenmorefish.dimensionfishing.DimensionFishing;
 import org.evenmorefish.dimensionfishing.LureTracker;
 import org.evenmorefish.dimensionfishing.config.MainConfig;
-import org.evenmorefish.dimensionfishing.events.LavaFishCaughtEvent;
-import org.evenmorefish.dimensionfishing.events.VoidFishCaughtEvent;
 import org.evenmorefish.dimensionfishing.state.CatchState;
 import org.evenmorefish.dimensionfishing.state.FishingState;
-import org.evenmorefish.dimensionfishing.state.impl.LavaFishingState;
 import org.evenmorefish.dimensionfishing.state.impl.NoneFishingState;
-import org.evenmorefish.dimensionfishing.state.impl.VoidFishingState;
 import org.evenmorefish.dimensionfishing.util.Keys;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -132,7 +126,7 @@ public class TrackedHook {
                 lureTime--;
                 if (lureTime <= 0) {
                     player.sendPlainMessage("You can now catch the fish.");
-                    fishingState.playSplashSound(player);
+                    fishingState.playBiteSound(player);
                     stand.teleport(stand.getLocation().add(0, -0.3, 0));
                     pulled = true;
                     catchState = CatchState.CATCH;

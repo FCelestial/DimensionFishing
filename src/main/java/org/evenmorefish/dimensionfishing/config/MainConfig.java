@@ -78,8 +78,8 @@ public class MainConfig {
         return Sound.sound().type(org.bukkit.Sound.ENTITY_ENDERMAN_TELEPORT).build();
     }
 
-    public Sound getLavaFishingSplashSound() {
-        Sound sound = SoundSerializer.deserialize(config.getString("lava.splash-sound"));
+    public Sound getLavaFishingBiteSound() {
+        Sound sound = SoundSerializer.deserialize(config.getString("lava.bite-sound"));
         if (sound != null) {
             return sound;
         }
@@ -90,8 +90,8 @@ public class MainConfig {
             .build();
     }
 
-    public Sound getVoidFishingSplashSound() {
-        Sound sound = SoundSerializer.deserialize(config.getString("void.splash-sound"));
+    public Sound getVoidFishingBiteSound() {
+        Sound sound = SoundSerializer.deserialize(config.getString("void.bite-sound"));
         if (sound != null) {
             return sound;
         }

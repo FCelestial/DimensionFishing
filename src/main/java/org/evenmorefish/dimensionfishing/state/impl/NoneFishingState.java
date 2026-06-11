@@ -11,7 +11,7 @@ public class NoneFishingState implements FishingState {
     private final ParticleFactory lureParticles = new ParticleFactory();
 
     @Override
-    public void playSplashSound(@NonNull Player player) {
+    public void playBiteSound(@NonNull Player player) {
     }
 
     @Override
