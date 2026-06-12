@@ -6,11 +6,11 @@ plugins {
 }
 
 repositories {
-    mavenLocal()
+    //mavenLocal()
     mavenCentral()
     gradlePluginPortal()
     maven("https://repo.papermc.io/repository/maven-public/")
-    //maven("https://repo.codemc.io/repository/EvenMoreFish/")
+    maven("https://repo.codemc.io/repository/EvenMoreFish/")
 }
 
 dependencies {
