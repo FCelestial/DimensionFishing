@@ -7,16 +7,11 @@ This plugin allows players to fish in lava, or cast their rod into the end's voi
 > [!NOTE]  
 > This plugin does not provide fish rewards on its own. It requires another plugin to provide the rewards.
 
-## Supported Plugins
+## Supported Fishing Plugins
 
 Currently, DimensionFishing only supports fish from one plugin: [EvenMoreFish](https://github.com/EvenMoreFish/EvenMoreFish).
 
 ## Integration
-
-### Fishing Rewards:
-- EvenMoreFish - Provides custom fishing processors to allow EMF fish to be caught.
-
-### Exploit Prevention:
 - mcMMO - Lava and Void fishing will both count towards overfishing if enabled.
 
 ## Download
