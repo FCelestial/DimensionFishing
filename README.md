@@ -4,6 +4,8 @@ Further improve your server's fishing experience with lava and void fishing!
 
 This plugin allows players to fish in lava, or cast their rod into the end's void to catch fish.
 
+Thank you to [@braynblocks](https://github.com/braynblocks) for explaining how to make this possible!
+
 > [!NOTE]  
 > This plugin does not provide fish rewards on its own. It requires another plugin to provide the rewards.
 
