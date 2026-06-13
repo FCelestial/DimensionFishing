@@ -33,6 +33,9 @@ bukkit {
     apiVersion = "1.21"
     author = "FireML"
     description = project.description.toString()
+    softDepend = listOf(
+        "EvenMoreFish"
+    )
 
     paperPluginLoader = "org.evenmorefish.dimensionfishing.LibraryLoader"
     paperSkipLibraries = true
