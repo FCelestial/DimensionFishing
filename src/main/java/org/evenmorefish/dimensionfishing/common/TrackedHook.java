@@ -1,6 +1,10 @@
 package org.evenmorefish.dimensionfishing.common;
 
-import net.kyori.adventure.text.Component;
+import com.gmail.nossr50.config.experience.ExperienceConfig;
+import com.gmail.nossr50.datatypes.player.McMMOPlayer;
+import com.gmail.nossr50.locale.LocaleLoader;
+import com.gmail.nossr50.skills.fishing.FishingManager;
+import com.gmail.nossr50.util.player.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -144,6 +148,9 @@ public class TrackedHook {
         if (catchState != CatchState.CATCH) {
             return;
         }
+        if (checkMcMMOOverfishing()) {
+            return;
+        }
         fishingState.callEvent(this);
     }
 
@@ -246,8 +253,31 @@ public class TrackedHook {
         int maxWaitTime = Math.max(0, hook.getMaxWaitTime() - reduceTicks);
         int minWaitTime = Math.max(0, hook.getMinWaitTime() - reduceTicks);
 
-        int waitTime = (minWaitTime == maxWaitTime) ? minWaitTime : RANDOM.nextInt(minWaitTime, maxWaitTime);
-        return waitTime;
+        return (minWaitTime == maxWaitTime) ? minWaitTime : RANDOM.nextInt(minWaitTime, maxWaitTime);
+    }
+
+    private boolean checkMcMMOOverfishing() {
+        if (!Bukkit.getPluginManager().isPluginEnabled("mcMMO")) {
+            return false;
+        }
+        if (ExperienceConfig.getInstance().isFishingExploitingPrevented()) {
+            return false;
+        }
+        McMMOPlayer mmoPlayer = UserManager.getPlayer(player);
+        if (mmoPlayer == null) {
+            return false;
+        }
+        FishingManager manager = mmoPlayer.getFishingManager();
+        manager.processExploiting(this.hook.getLocation().toVector());
+        if (manager.isExploitingFishing()) {
+            // This was taken directly from mcMMO's source code.
+            player.sendMessage(LocaleLoader.getString(
+                "Fishing.ScarcityTip",
+                ExperienceConfig.getInstance().getFishingExploitingOptionMoveRange())
+            );
+            return true;
+        }
+        return false;
     }
 
 }

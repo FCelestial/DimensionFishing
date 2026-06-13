@@ -10,7 +10,12 @@ repositories {
     mavenCentral()
     gradlePluginPortal()
     maven("https://repo.papermc.io/repository/maven-public/")
+
+    // EvenMoreFish
     maven("https://repo.codemc.io/repository/EvenMoreFish/")
+
+    // mcMMO
+    maven("https://nexus.neetgames.com/repository/maven-releases/")
 }
 
 dependencies {
@@ -19,6 +24,7 @@ dependencies {
         exclude("de.tr7zw", "item-nbt-api")
         exclude("com.github.Anon8281", "UniversalScheduler")
     }
+    compileOnly(libs.mcmmo)
 }
 
 group = "org.evenmorefish"
