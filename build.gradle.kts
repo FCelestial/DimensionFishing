@@ -24,7 +24,9 @@ dependencies {
         exclude("de.tr7zw", "item-nbt-api")
         exclude("com.github.Anon8281", "UniversalScheduler")
     }
-    compileOnly(libs.mcmmo)
+    compileOnly(libs.mcmmo) {
+        exclude("*", "*")
+    }
 }
 
 group = "org.evenmorefish"
