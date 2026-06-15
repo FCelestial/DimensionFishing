@@ -1,5 +1,7 @@
 package org.evenmorefish.dimensionfishing.state.impl;
 
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.evenmorefish.dimensionfishing.common.TrackedHook;
 import org.evenmorefish.dimensionfishing.config.MainConfig;
@@ -7,6 +9,9 @@ import org.evenmorefish.dimensionfishing.events.LavaFishCaughtEvent;
 import org.evenmorefish.dimensionfishing.state.FishingState;
 import org.evenmorefish.dimensionfishing.util.ParticleFactory;
 import org.jspecify.annotations.NonNull;
+
+import java.util.List;
+import java.util.Objects;
 
 public class LavaFishingState implements FishingState {
 
@@ -35,5 +40,17 @@ public class LavaFishingState implements FishingState {
         String permission = MainConfig.getInstance().getLavaFishingPermission();
         return permission == null || player.hasPermission(permission);
     }
+
+    @Override
+    public boolean checkWorld(@NonNull World hookWorld) {
+        List<String> worlds = MainConfig.getInstance().getLavaAllowedWorlds();
+        if (worlds.isEmpty()) {
+            return hookWorld.getEnvironment() == World.Environment.NETHER;
+        }
+        return worlds.stream()
+            .map(this::parseWorld)
+            .anyMatch(hookWorld::equals);
+    }
+
 
 }

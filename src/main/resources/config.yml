@@ -10,8 +10,8 @@ lava:
   permission: []
 
   # Which worlds is lava fishing enabled in?
-  allowed-worlds:
-    - world_nether
+  # If this is empty, it will default to any world with the nether environment.
+  allowed-worlds: []
 
   # Which sound should play when the hook is swallowed by lava?
   # The hook is swallowed if the fish is not caught in time.
@@ -31,8 +31,8 @@ void:
   permission: []
 
   # Which worlds is void fishing enabled in?
-  allowed-worlds:
-    - world_the_end
+  # If this is empty, it will default to any world with the end environment.
+  allowed-worlds: []
 
   # Which sound should play when the hook is swallowed by the void?
   # The hook is swallowed if the fish is not caught in time.

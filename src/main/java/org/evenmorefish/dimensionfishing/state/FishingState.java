@@ -1,5 +1,9 @@
 package org.evenmorefish.dimensionfishing.state;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.evenmorefish.dimensionfishing.common.TrackedHook;
 import org.evenmorefish.dimensionfishing.state.impl.LavaFishingState;
@@ -8,6 +12,7 @@ import org.evenmorefish.dimensionfishing.state.impl.VoidFishingState;
 import org.evenmorefish.dimensionfishing.util.ParticleFactory;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @ApiStatus.Internal
 public interface FishingState {
@@ -25,5 +30,17 @@ public interface FishingState {
     void callEvent(@NotNull TrackedHook hook);
 
     boolean checkPermission(@NotNull Player player);
+
+    boolean checkWorld(@NotNull World hookWorld);
+
+    default @Nullable World parseWorld(@NotNull String name) {
+        if (name.contains(":")) {
+            NamespacedKey key = NamespacedKey.fromString(name);
+            if (key != null) {
+                return Bukkit.getWorld(key);
+            }
+        }
+        return Bukkit.getWorld(name);
+    }
 
 }

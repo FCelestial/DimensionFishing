@@ -12,6 +12,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Fish;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
@@ -176,11 +177,11 @@ public class TrackedHook {
     }
 
     private boolean canLavaFish() {
-        return FishingState.LAVA.checkPermission(player) && MainConfig.getInstance().getLavaAllowedWorlds().contains(hook.getWorld().getName());
+        return FishingState.LAVA.checkPermission(player) && FishingState.LAVA.checkWorld(hook.getWorld());
     }
 
     private boolean canVoidFish() {
-        return FishingState.VOID.checkPermission(player) && MainConfig.getInstance().getVoidAllowedWorlds().contains(hook.getWorld().getName());
+        return FishingState.VOID.checkPermission(player) && FishingState.VOID.checkWorld(hook.getWorld());
     }
 
     public void invalidate() {

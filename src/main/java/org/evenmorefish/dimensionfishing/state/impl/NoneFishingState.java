@@ -1,5 +1,7 @@
 package org.evenmorefish.dimensionfishing.state.impl;
 
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.evenmorefish.dimensionfishing.common.TrackedHook;
 import org.evenmorefish.dimensionfishing.state.FishingState;
@@ -26,6 +28,11 @@ public class NoneFishingState implements FishingState {
 
     @Override
     public boolean checkPermission(@NonNull Player player) {
+        return true;
+    }
+
+    @Override
+    public boolean checkWorld(@NonNull World hookWorld) {
         return true;
     }
 
