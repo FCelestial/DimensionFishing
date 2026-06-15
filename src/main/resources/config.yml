@@ -1,3 +1,6 @@
+# Configuration for DimensionFishing.
+# See the EvenMoreFish Wiki for detailed explanations: https://evenmorefish.github.io/EvenMoreFish/docs/addons/dimensionfishing/setup
+
 # The plugin's reload message. This is the only message in the plugin.
 reload-message: "<gradient:#E6F9FF:#8FD9FB>[DimensionFishing] <white>Successfully reloaded the plugin."
 
@@ -18,7 +21,6 @@ lava:
   bite-sound: ENTITY_FISHING_BOBBER_SPLASH,0.25,0.5
 
   # Which particles should show while the fish is being lured?
-  # See [wiki doesn't exist yet] for a full explanation of this config.
   lure-particles:
     - particle: LAVA
       amount: 3
