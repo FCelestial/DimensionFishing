@@ -19,6 +19,7 @@ import org.evenmorefish.dimensionfishing.LureTracker;
 import org.evenmorefish.dimensionfishing.config.MainConfig;
 import org.evenmorefish.dimensionfishing.state.CatchState;
 import org.evenmorefish.dimensionfishing.state.FishingState;
+import org.evenmorefish.dimensionfishing.state.impl.LavaFishingState;
 import org.evenmorefish.dimensionfishing.state.impl.NoneFishingState;
 import org.evenmorefish.dimensionfishing.util.Keys;
 import org.jetbrains.annotations.NotNull;
@@ -175,11 +176,11 @@ public class TrackedHook {
     }
 
     private boolean canLavaFish() {
-        return MainConfig.getInstance().getLavaAllowedWorlds().contains(hook.getWorld().getName());
+        return FishingState.LAVA.checkPermission(player) && MainConfig.getInstance().getLavaAllowedWorlds().contains(hook.getWorld().getName());
     }
 
     private boolean canVoidFish() {
-        return MainConfig.getInstance().getVoidAllowedWorlds().contains(hook.getWorld().getName());
+        return FishingState.VOID.checkPermission(player) && MainConfig.getInstance().getVoidAllowedWorlds().contains(hook.getWorld().getName());
     }
 
     public void invalidate() {
