@@ -27,6 +27,7 @@ dependencies {
     compileOnly(libs.mcmmo) {
         exclude("*", "*")
     }
+    implementation(libs.bstats)
 }
 
 group = "org.evenmorefish"
@@ -58,6 +59,8 @@ tasks {
         archiveBaseName.set(project.name)
         archiveVersion.set(project.version.toString())
         archiveClassifier.set("")
+
+        relocate("org.bstats", "org.evenmorefish.dimensionfishing.stats")
     }
     withType<JavaCompile> {
         options.encoding = "UTF-8"

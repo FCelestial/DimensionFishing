@@ -9,6 +9,7 @@ dependencyResolutionManagement {
             library("mcmmo", "com.gmail.nossr50.mcMMO:mcMMO:2.2.053")
 
             // implementation dependencies
+            library("bstats", "org.bstats:bstats-bukkit:3.2.1")
 
             // bukkitLibrary dependencies
 

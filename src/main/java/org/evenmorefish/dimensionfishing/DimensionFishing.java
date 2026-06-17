@@ -1,6 +1,7 @@
 package org.evenmorefish.dimensionfishing;
 
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,11 +17,14 @@ public class DimensionFishing extends JavaPlugin {
 
     private static DimensionFishing INSTANCE;
 
+    private final Metrics metrics;
+
     public DimensionFishing() {
         if (INSTANCE != null) {
             throw new UnsupportedOperationException(getClass().getName() + " has already been assigned!");
         }
         INSTANCE = this;
+        this.metrics = new Metrics(this, 32045);
     }
 
     public static @NotNull DimensionFishing getInstance() {
