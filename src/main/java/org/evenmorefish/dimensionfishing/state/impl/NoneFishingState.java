@@ -1,6 +1,5 @@
 package org.evenmorefish.dimensionfishing.state.impl;
 
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.evenmorefish.dimensionfishing.common.TrackedHook;

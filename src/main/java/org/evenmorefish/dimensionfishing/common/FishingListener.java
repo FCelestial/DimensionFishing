@@ -10,7 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.checkerframework.checker.units.qual.N;
 import org.evenmorefish.dimensionfishing.util.Keys;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

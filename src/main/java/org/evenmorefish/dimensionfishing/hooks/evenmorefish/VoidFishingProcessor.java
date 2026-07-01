@@ -19,7 +19,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.evenmorefish.dimensionfishing.common.TrackedHook;
-import org.evenmorefish.dimensionfishing.events.LavaFishCaughtEvent;
 import org.evenmorefish.dimensionfishing.events.VoidFishCaughtEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

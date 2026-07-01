@@ -1,10 +1,7 @@
 package org.evenmorefish.dimensionfishing;
 
-import com.destroystokyo.paper.ParticleBuilder;
 import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.evenmorefish.dimensionfishing.common.TrackedHook;
-import org.evenmorefish.dimensionfishing.config.MainConfig;
 import org.evenmorefish.dimensionfishing.util.DirectionUtil;
 import org.evenmorefish.dimensionfishing.util.ParticleFactory;
 import org.jetbrains.annotations.NotNull;
