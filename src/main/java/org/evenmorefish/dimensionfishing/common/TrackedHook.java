@@ -166,7 +166,7 @@ public class TrackedHook {
     }
 
     private boolean isLava() {
-        return canLavaFish() && hook.getLocation().getBlock().getType() == Material.LAVA;
+        return hook.getLocation().getBlock().getType() == Material.LAVA;
     }
 
     private boolean isWater() {
@@ -174,7 +174,7 @@ public class TrackedHook {
     }
 
     private boolean isVoid() {
-        return canVoidFish() && hook.getLocation().getBlockY() <= voidRequiredLevel;
+        return hook.getLocation().getBlockY() <= voidRequiredLevel;
     }
 
     private boolean canLavaFish() {
