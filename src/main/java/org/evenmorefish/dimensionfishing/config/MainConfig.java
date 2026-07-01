@@ -91,11 +91,11 @@ public class MainConfig {
     }
 
     public String getLavaFishingPermission() {
-        return config.getString("lava.permission");
+        return config.getString("lava.permission", null);
     }
 
     public String getVoidFishingPermission() {
-        return config.getString("void.permission");
+        return config.getString("void.permission", null);
     }
 
     public Sound getVoidFishingBiteSound() {

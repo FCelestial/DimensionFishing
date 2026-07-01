@@ -16,6 +16,8 @@ import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 import org.evenmorefish.dimensionfishing.LureTracker;
+import org.evenmorefish.dimensionfishing.events.LavaFishCaughtEvent;
+import org.evenmorefish.dimensionfishing.events.VoidFishCaughtEvent;
 import org.evenmorefish.dimensionfishing.state.CatchState;
 import org.evenmorefish.dimensionfishing.state.FishingState;
 import org.evenmorefish.dimensionfishing.state.impl.NoneFishingState;
@@ -37,7 +39,7 @@ public class TrackedHook {
     private FishingState fishingState = FishingState.NONE;
     private CatchState catchState = CatchState.WAIT;
     private ArmorStand stand;
-    private boolean shouldCustomTick = true;
+    private boolean shouldCustomTick;
     private final int voidRequiredLevel;
 
     private int waitTime = 0;
@@ -56,6 +58,8 @@ public class TrackedHook {
         // Calculating lure and wait time. Unfortunately the Bukkit API doesn't apply lure so we have to do it ourselves :D
         this.waitTime = fetchWaitTime(lureLevel);
         this.lureTime = RANDOM.nextInt(hook.getMinLureTime(), hook.getMaxLureTime());
+
+        this.shouldCustomTick = shouldStartCustomTick();
     }
 
     public @NotNull FishHook getFishHook() {
@@ -174,11 +178,11 @@ public class TrackedHook {
     }
 
     private boolean canLavaFish() {
-        return FishingState.LAVA.checkPermission(player) && FishingState.LAVA.checkWorld(hook.getWorld());
+        return LavaFishCaughtEvent.hasListeners() && FishingState.LAVA.checkPermission(player) && FishingState.LAVA.checkWorld(hook.getWorld());
     }
 
     private boolean canVoidFish() {
-        return FishingState.VOID.checkPermission(player) && FishingState.VOID.checkWorld(hook.getWorld());
+        return VoidFishCaughtEvent.hasListeners() && FishingState.VOID.checkPermission(player) && FishingState.VOID.checkWorld(hook.getWorld());
     }
 
     public void invalidate() {

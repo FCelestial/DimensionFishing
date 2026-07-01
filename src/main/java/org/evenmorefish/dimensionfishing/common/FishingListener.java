@@ -22,7 +22,7 @@ public class FishingListener implements Listener {
             case FISHING -> {
                 int lureLevel = fetchLureLevel(event.getPlayer(), event.getHand());
                 TrackedHook hook = new TrackedHook(event.getPlayer(), event.getHook(), lureLevel);
-                if (!hook.shouldStartCustomTick()) {
+                if (!hook.isShouldCustomTick()) {
                     return;
                 }
                 HookManager.getInstance().trackHook(hook);

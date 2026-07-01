@@ -2,6 +2,7 @@ package org.evenmorefish.dimensionfishing.events;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.evenmorefish.dimensionfishing.DimensionFishing;
 import org.evenmorefish.dimensionfishing.common.TrackedHook;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -27,6 +28,14 @@ public class VoidFishCaughtEvent extends Event {
     @Override
     public @NotNull HandlerList getHandlers() {
         return handlers;
+    }
+
+    public static boolean hasListeners() {
+        if (handlers.getRegisteredListeners().length == 0) {
+            DimensionFishing.getInstance().getLogger().warning("There are no listeners for VoidFishCaughtEvent.");
+            return false;
+        }
+        return true;
     }
 
 }
