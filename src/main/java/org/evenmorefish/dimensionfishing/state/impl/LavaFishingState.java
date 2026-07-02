@@ -3,7 +3,7 @@ package org.evenmorefish.dimensionfishing.state.impl;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.evenmorefish.dimensionfishing.common.TrackedHook;
-import org.evenmorefish.dimensionfishing.config.MainConfig;
+import org.evenmorefish.dimensionfishing.config.DimensionFishingConfig;
 import org.evenmorefish.dimensionfishing.events.LavaFishCaughtEvent;
 import org.evenmorefish.dimensionfishing.state.FishingState;
 import org.evenmorefish.dimensionfishing.util.ParticleFactory;
@@ -15,17 +15,17 @@ public class LavaFishingState implements FishingState {
 
     @Override
     public void playBiteSound(@NonNull Player player) {
-        player.playSound(MainConfig.getInstance().getLavaFishingBiteSound());
+        player.playSound(DimensionFishingConfig.getInstance().getLavaFishingBiteSound());
     }
 
     @Override
     public void playSwallowSound(@NonNull Player player) {
-        player.playSound(MainConfig.getInstance().getLavaFishingSwallowSound());
+        player.playSound(DimensionFishingConfig.getInstance().getLavaFishingSwallowSound());
     }
 
     @Override
     public @NonNull ParticleFactory getLureParticles() {
-        return MainConfig.getInstance().getLavaFishingLureParticles();
+        return DimensionFishingConfig.getInstance().getLavaFishingLureParticles();
     }
 
     @Override
@@ -35,13 +35,13 @@ public class LavaFishingState implements FishingState {
 
     @Override
     public boolean checkPermission(@NonNull Player player) {
-        String permission = MainConfig.getInstance().getLavaFishingPermission();
+        String permission = DimensionFishingConfig.getInstance().getLavaFishingPermission();
         return permission == null || player.hasPermission(permission);
     }
 
     @Override
     public boolean checkWorld(@NonNull World hookWorld) {
-        List<String> worlds = MainConfig.getInstance().getLavaAllowedWorlds();
+        List<String> worlds = DimensionFishingConfig.getInstance().getLavaAllowedWorlds();
         if (worlds.isEmpty()) {
             return hookWorld.getEnvironment() == World.Environment.NETHER;
         }
