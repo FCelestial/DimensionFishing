@@ -27,7 +27,10 @@ dependencies {
     compileOnly(libs.mcmmo) {
         exclude("*", "*")
     }
+
     implementation(libs.bstats)
+
+    bukkitLibrary(libs.configurate)
 }
 
 group = "org.evenmorefish"

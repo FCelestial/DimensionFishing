@@ -27,11 +27,11 @@ public class ParticleFactory {
 
     public ParticleFactory() {}
 
-    public ParticleFactory(@NotNull List<Map<?, ?>> mapList) {
+    public ParticleFactory(@NotNull List<Map<String, String>> mapList) {
         loadParticles(mapList);
     }
 
-    private void loadParticles(List<Map<?, ?>> mapList) {
+    private void loadParticles(List<Map<String, String>> mapList) {
         this.particles.clear();
         mapList.forEach(map -> {
             Particle particle = fetchParticle(map.get("particle"));
@@ -68,7 +68,7 @@ public class ParticleFactory {
         }
     }
 
-    private @Nullable Particle fetchParticle(@Nullable Object name) {
+    private @Nullable Particle fetchParticle(@Nullable String name) {
         if (name == null) {
             return null;
         }
@@ -80,7 +80,7 @@ public class ParticleFactory {
         }
     }
 
-    private void applyColor(@Nullable Object color, @NotNull ParticleBuilder builder) {
+    private void applyColor(@Nullable String color, @NotNull ParticleBuilder builder) {
         if (color == null) {
             return;
         }
@@ -95,7 +95,7 @@ public class ParticleFactory {
         }
     }
 
-    private void applyColorTransition(@Nullable Object transition, @NotNull ParticleBuilder builder) {
+    private void applyColorTransition(@Nullable String transition, @NotNull ParticleBuilder builder) {
         if (transition == null) {
             return;
         }
@@ -122,7 +122,7 @@ public class ParticleFactory {
         }
     }
 
-    private void applyAmount(@Nullable Object amount, @NotNull ParticleBuilder builder) {
+    private void applyAmount(@Nullable String amount, @NotNull ParticleBuilder builder) {
         if (amount == null) {
             builder.count(1);
             return;
@@ -134,7 +134,7 @@ public class ParticleFactory {
         }
     }
 
-    private void applyExtra(@Nullable Object extra, @NotNull ParticleBuilder builder) {
+    private void applyExtra(@Nullable String extra, @NotNull ParticleBuilder builder) {
         if (extra == null) {
             return;
         }
@@ -158,32 +158,31 @@ public class ParticleFactory {
         }
     }
 
-    private void applyDataType(@Nullable Object object, @NotNull ParticleBuilder builder) {
-        if (object == null) {
+    private void applyDataType(@Nullable String string, @NotNull ParticleBuilder builder) {
+        if (string == null) {
             return;
         }
-        String objectString = object.toString();
         Class<?> clazz = builder.particle().getDataType();
 
         // Big ugly if chain incoming :D
         try {
             if (clazz == Float.class) {
-                builder.data(Float.parseFloat(objectString));
+                builder.data(Float.parseFloat(string));
             } else if (clazz == Integer.class) {
-                builder.data(Integer.parseInt(objectString));
+                builder.data(Integer.parseInt(string));
             } else if (clazz == BlockData.class) {
-                Material material = Material.valueOf(objectString.toUpperCase());
+                Material material = Material.valueOf(string.toUpperCase());
                 if (material.isBlock()) {
                     builder.data(material.createBlockData());
                 }
             } else if (clazz == ItemStack.class) {
-                Material material = Material.valueOf(objectString.toUpperCase());
+                Material material = Material.valueOf(string.toUpperCase());
                 if (material.isItem()) {
                     builder.data(ItemStack.of(material));
                 }
             }
         } catch (IllegalArgumentException exception) {
-            DimensionFishing.getInstance().getLogger().log(Level.WARNING, object + " is not valid particle data.", exception);
+            DimensionFishing.getInstance().getLogger().log(Level.WARNING, string + " is not valid particle data.", exception);
         }
     }
 
