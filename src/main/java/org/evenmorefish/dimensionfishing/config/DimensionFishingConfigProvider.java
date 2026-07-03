@@ -12,7 +12,9 @@ import java.util.Map;
  */
 public interface DimensionFishingConfigProvider {
 
-    void reloadConfig();
+    boolean isLavaEnabled();
+
+    boolean isVoidEnabled();
 
     @NonNull List<String> getLavaAllowedWorlds();
 
