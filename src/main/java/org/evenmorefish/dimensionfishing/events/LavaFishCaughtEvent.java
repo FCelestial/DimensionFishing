@@ -35,7 +35,6 @@ public class LavaFishCaughtEvent extends Event {
             DimensionFishing.getInstance().getLogger().warning("There are no listeners for LavaFishCaughtEvent.");
             return false;
         }
-        DimensionFishing.getInstance().getLogger().warning("There are listeners for LavaFishCaughtEvent.");
         return true;
     }
 

@@ -1,9 +1,11 @@
 package org.evenmorefish.dimensionfishing;
 
+import io.papermc.paper.plugin.configuration.PluginMeta;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.evenmorefish.dimensionfishing.common.FishingListener;
 import org.evenmorefish.dimensionfishing.common.HookManager;
@@ -22,7 +24,7 @@ public class DimensionFishing {
     private final Metrics metrics;
     private final Logger logger;
     private final DimensionFishingConfigProvider configProvider;
-    private final boolean hasMcMMODependency;
+    private boolean hasMcMMODependency;
 
     public DimensionFishing(@NotNull JavaPlugin plugin, @NotNull DimensionFishingConfigProvider configProvider) {
         if (INSTANCE != null) {
@@ -34,8 +36,12 @@ public class DimensionFishing {
         this.logger = Logger.getLogger("DimensionFishing via " + plugin.getName());
         this.metrics = new Metrics(plugin, 32045);
 
-        //noinspection UnstableApiUsage
-        this.hasMcMMODependency = plugin.getPluginMeta().getPluginSoftDependencies().contains("mcMMO");
+        try {
+            Class.forName("com.gmail.nossr50.mcMMO");
+            this.hasMcMMODependency = true;
+        } catch (ClassNotFoundException ex) {
+            this.hasMcMMODependency = false;
+        }
     }
 
     public static @NotNull DimensionFishing getInstance() {
