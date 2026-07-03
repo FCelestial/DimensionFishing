@@ -15,7 +15,6 @@ dependencyResolutionManagement {
 
             // Gradle plugins
             plugin("shadow", "com.gradleup.shadow").version("9.4.1")
-            plugin("plugin-yml", "de.eldoria.plugin-yml.bukkit").version("0.9.0")
         }
     }
 }
