@@ -22,6 +22,7 @@ public class DimensionFishing {
     private final Metrics metrics;
     private final Logger logger;
     private final DimensionFishingConfigProvider configProvider;
+    private final boolean hasMcMMODependency;
 
     public DimensionFishing(@NotNull JavaPlugin plugin, @NotNull DimensionFishingConfigProvider configProvider) {
         if (INSTANCE != null) {
@@ -32,6 +33,9 @@ public class DimensionFishing {
         this.configProvider = configProvider;
         this.logger = Logger.getLogger("DimensionFishing via " + plugin.getName());
         this.metrics = new Metrics(plugin, 32045);
+
+        //noinspection UnstableApiUsage
+        this.hasMcMMODependency = plugin.getPluginMeta().getPluginSoftDependencies().contains("mcMMO");
     }
 
     public static @NotNull DimensionFishing getInstance() {
@@ -69,6 +73,10 @@ public class DimensionFishing {
 
     public Logger getLogger() {
         return this.logger;
+    }
+
+    public boolean hasMcMMODependency() {
+        return this.hasMcMMODependency;
     }
 
 }

@@ -5,6 +5,7 @@ import com.gmail.nossr50.datatypes.player.McMMOPlayer;
 import com.gmail.nossr50.locale.LocaleLoader;
 import com.gmail.nossr50.skills.fishing.FishingManager;
 import com.gmail.nossr50.util.player.UserManager;
+import org.apache.commons.lang3.ClassLoaderUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -270,7 +271,10 @@ public class TrackedHook {
         if (!Bukkit.getPluginManager().isPluginEnabled("mcMMO")) {
             return false;
         }
-        if (ExperienceConfig.getInstance().isFishingExploitingPrevented()) {
+        if (!DimensionFishing.getInstance().hasMcMMODependency()) {
+            return false;
+        }
+        if (!ExperienceConfig.getInstance().isFishingExploitingPrevented()) {
             return false;
         }
         McMMOPlayer mmoPlayer = UserManager.getPlayer(player);
