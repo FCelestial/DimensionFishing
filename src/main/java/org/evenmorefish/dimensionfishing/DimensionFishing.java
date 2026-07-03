@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.evenmorefish.dimensionfishing.common.FishingListener;
 import org.evenmorefish.dimensionfishing.common.HookManager;
-import org.evenmorefish.dimensionfishing.config.DimensionFishingConfig;
+import org.evenmorefish.dimensionfishing.config.DimensionFishingConfigProvider;
 import org.evenmorefish.dimensionfishing.state.FishingState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,13 +21,15 @@ public class DimensionFishing {
     private final JavaPlugin plugin;
     private final Metrics metrics;
     private final Logger logger;
+    private final DimensionFishingConfigProvider configProvider;
 
-    public DimensionFishing(@NotNull JavaPlugin plugin) {
+    public DimensionFishing(@NotNull JavaPlugin plugin, @NotNull DimensionFishingConfigProvider configProvider) {
         if (INSTANCE != null) {
             throw new UnsupportedOperationException(getClass().getName() + " has already been assigned!");
         }
         INSTANCE = this;
         this.plugin = plugin;
+        this.configProvider = configProvider;
         this.logger = Logger.getLogger("DimensionFishing via " + plugin.getName());
         this.metrics = new Metrics(plugin, 32045);
     }
@@ -43,6 +45,12 @@ public class DimensionFishing {
         return this.plugin;
     }
 
+    public @NotNull DimensionFishingConfigProvider getConfigProvider() {
+        return this.configProvider;
+    }
+
+    public void load() {}
+
     public void enable() {
         HookManager.getInstance().load();
         Bukkit.getPluginManager().registerEvents(new FishingListener(), plugin);
@@ -53,7 +61,6 @@ public class DimensionFishing {
     }
 
     public void reload(@Nullable CommandSender sender) {
-        DimensionFishingConfig.getInstance().reload();
         if (sender instanceof Player player) {
             FishingState.LAVA.getLureParticles().show(player.getLocation());
             FishingState.VOID.getLureParticles().show(player.getLocation());

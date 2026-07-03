@@ -1,11 +1,11 @@
 package org.evenmorefish.dimensionfishing.config;
 
 import net.kyori.adventure.sound.Sound;
+import org.evenmorefish.dimensionfishing.util.ParticleFactory;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Provides all configs for DimensionFishing.
@@ -32,8 +32,8 @@ public interface DimensionFishingConfigProvider {
 
     @Nullable String getVoidFishingPermission();
 
-    @NonNull List<Map<?, ?>> getLavaFishingLureParticles();
+    @NonNull ParticleFactory getLavaFishingLureParticles();
 
-    @NonNull List<Map<?, ?>> getVoidFishingLureParticles();
+    @NonNull ParticleFactory getVoidFishingLureParticles();
     
 }
