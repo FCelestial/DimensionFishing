@@ -10,9 +10,6 @@ repositories {
     gradlePluginPortal()
     maven("https://repo.papermc.io/repository/maven-public/")
 
-    // EvenMoreFish
-    maven("https://repo.codemc.io/repository/EvenMoreFish/")
-
     // mcMMO
     maven("https://nexus.neetgames.com/repository/maven-releases/")
 }
