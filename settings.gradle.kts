@@ -12,7 +12,6 @@ dependencyResolutionManagement {
             library("bstats", "org.bstats:bstats-bukkit:3.2.1")
 
             // bukkitLibrary dependencies
-            library("configurate", "org.spongepowered:configurate-yaml:4.2.0")
 
             // Gradle plugins
             plugin("shadow", "com.gradleup.shadow").version("9.4.1")

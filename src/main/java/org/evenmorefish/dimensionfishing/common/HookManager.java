@@ -28,7 +28,7 @@ public class HookManager {
 
     public void load() {
         this.task = Bukkit.getScheduler().runTaskTimer(
-            DimensionFishing.getInstance(),
+            DimensionFishing.getInstance().getPlugin(),
             () -> {
                 Iterator<TrackedHook> iterator = trackedHooks.values().iterator();
                 while (iterator.hasNext()) {
