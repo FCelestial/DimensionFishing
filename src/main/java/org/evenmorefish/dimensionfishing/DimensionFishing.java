@@ -2,6 +2,7 @@ package org.evenmorefish.dimensionfishing;
 
 import io.papermc.paper.plugin.configuration.PluginMeta;
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -35,6 +36,7 @@ public class DimensionFishing {
         this.configProvider = configProvider;
         this.logger = Logger.getLogger("DimensionFishing via " + plugin.getName());
         this.metrics = new Metrics(plugin, 32045);
+        setupMetrics();
 
         try {
             Class.forName("com.gmail.nossr50.mcMMO");
@@ -49,6 +51,23 @@ public class DimensionFishing {
             throw new IllegalStateException(DimensionFishing.class.getSimpleName() + " has not been assigned!");
         }
         return INSTANCE;
+    }
+
+    private void setupMetrics() {
+        this.metrics.addCustomChart(
+            new SimplePie("typesEnabled", () -> {
+                boolean lavaEnabled = configProvider.isLavaEnabled();
+                boolean voidEnabled = configProvider.isVoidEnabled();
+                if (lavaEnabled && voidEnabled) {
+                    return "Both";
+                } else if (lavaEnabled) {
+                    return "Lava";
+                } else if (voidEnabled) {
+                    return "Void";
+                }
+                return "None";
+            })
+        );
     }
 
     public @NotNull JavaPlugin getPlugin() {
