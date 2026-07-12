@@ -52,6 +52,9 @@ public class TrackedHook {
     private boolean pulled = false;
     private int pullTime = 5;
 
+    private final boolean canLava;
+    private final boolean canVoid;
+
     public TrackedHook(@NotNull Player player, @NotNull FishHook hook, int lureLevel) {
         this.player = player;
         this.hook = hook;
@@ -61,7 +64,9 @@ public class TrackedHook {
         this.waitTime = fetchWaitTime(lureLevel);
         this.lureTime = RANDOM.nextInt(hook.getMinLureTime(), hook.getMaxLureTime());
 
-        this.shouldCustomTick = shouldStartCustomTick();
+        this.canLava = canLavaFish();
+        this.canVoid = canVoidFish();
+        this.shouldCustomTick = (this.canLava || this.canVoid);
     }
 
     public @NotNull FishHook getFishHook() {
@@ -168,7 +173,7 @@ public class TrackedHook {
     }
 
     private boolean isLava() {
-        return hook.getLocation().getBlock().getType() == Material.LAVA;
+        return this.canLava && hook.getLocation().getBlock().getType() == Material.LAVA;
     }
 
     private boolean isWater() {
@@ -176,7 +181,7 @@ public class TrackedHook {
     }
 
     private boolean isVoid() {
-        return hook.getLocation().getBlockY() <= voidRequiredLevel;
+        return this.canVoid && hook.getLocation().getBlockY() <= voidRequiredLevel;
     }
 
     private boolean canLavaFish() {
@@ -197,10 +202,6 @@ public class TrackedHook {
         this.shouldCustomTick = false;
         stand.remove();
         hook.remove();
-    }
-
-    public boolean shouldStartCustomTick() {
-        return canLavaFish() || canVoidFish();
     }
 
     public boolean isShouldCustomTick() {
