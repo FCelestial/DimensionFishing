@@ -6,6 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -16,8 +17,11 @@ import org.jetbrains.annotations.Nullable;
 
 public class FishingListener implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onFish(PlayerFishEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
         switch (event.getState()) {
             case FISHING -> {
                 int lureLevel = fetchLureLevel(event.getPlayer(), event.getHand());
