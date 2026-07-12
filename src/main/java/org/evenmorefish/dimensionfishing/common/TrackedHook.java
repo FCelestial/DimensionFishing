@@ -254,8 +254,6 @@ public class TrackedHook {
             scale.setBaseValue(0.1);
         }
 
-        // For debug only. Remove when published.
-        stand.setGlowing(true);
         return stand;
     }
 
