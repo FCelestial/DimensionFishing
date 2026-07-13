@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 import org.evenmorefish.dimensionfishing.DimensionFishing;
 import org.evenmorefish.dimensionfishing.LureTracker;
+import org.evenmorefish.dimensionfishing.config.DimensionFishingConfigProvider;
 import org.evenmorefish.dimensionfishing.events.LavaFishCaughtEvent;
 import org.evenmorefish.dimensionfishing.events.VoidFishCaughtEvent;
 import org.evenmorefish.dimensionfishing.state.CatchState;
@@ -185,15 +186,19 @@ public class TrackedHook {
     }
 
     private boolean canLavaFish() {
-        return DimensionFishing.getInstance().getConfigProvider().isLavaEnabled()
+        DimensionFishingConfigProvider config = DimensionFishing.getInstance().getConfigProvider();
+        return config.isLavaEnabled()
             && LavaFishCaughtEvent.hasListeners()
+            && config.getLavaPredicate().test(player)
             && FishingState.LAVA.checkPermission(player)
             && FishingState.LAVA.checkWorld(hook.getWorld());
     }
 
     private boolean canVoidFish() {
-        return DimensionFishing.getInstance().getConfigProvider().isVoidEnabled()
+        DimensionFishingConfigProvider config = DimensionFishing.getInstance().getConfigProvider();
+        return config.isVoidEnabled()
             && VoidFishCaughtEvent.hasListeners()
+            && config.getVoidPredicate().test(player)
             && FishingState.VOID.checkPermission(player)
             && FishingState.VOID.checkWorld(hook.getWorld());
     }
