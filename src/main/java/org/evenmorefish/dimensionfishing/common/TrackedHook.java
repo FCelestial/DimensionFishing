@@ -162,7 +162,10 @@ public class TrackedHook {
         if (checkMcMMOOverfishing()) {
             return;
         }
-        fishingState.callEvent(this);
+        if (!fishingState.callEvent(this)) {
+            fishingState.playSwallowSound(player);
+            invalidate();
+        }
     }
 
     private boolean isHookedToNormalEntity() {

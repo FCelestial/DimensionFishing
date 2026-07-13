@@ -29,8 +29,8 @@ public class VoidFishingState implements FishingState {
     }
 
     @Override
-    public void callEvent(@NonNull TrackedHook hook) {
-        new VoidFishCaughtEvent(hook).callEvent();
+    public boolean callEvent(@NonNull TrackedHook hook) {
+        return new VoidFishCaughtEvent(hook).callEvent();
     }
 
     @Override

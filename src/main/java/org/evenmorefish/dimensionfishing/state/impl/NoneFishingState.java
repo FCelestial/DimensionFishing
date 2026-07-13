@@ -23,7 +23,9 @@ public class NoneFishingState implements FishingState {
     }
 
     @Override
-    public void callEvent(@NonNull TrackedHook hook) {}
+    public boolean callEvent(@NonNull TrackedHook hook) {
+        return true;
+    }
 
     @Override
     public boolean checkPermission(@NonNull Player player) {

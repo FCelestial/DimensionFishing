@@ -26,7 +26,7 @@ public interface FishingState {
 
     @NotNull ParticleFactory getLureParticles();
 
-    void callEvent(@NotNull TrackedHook hook);
+    boolean callEvent(@NotNull TrackedHook hook);
 
     boolean checkPermission(@NotNull Player player);
 

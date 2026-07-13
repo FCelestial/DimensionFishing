@@ -29,8 +29,8 @@ public class LavaFishingState implements FishingState {
     }
 
     @Override
-    public void callEvent(@NonNull TrackedHook hook) {
-        new LavaFishCaughtEvent(hook).callEvent();
+    public boolean callEvent(@NonNull TrackedHook hook) {
+        return new LavaFishCaughtEvent(hook).callEvent();
     }
 
     @Override
