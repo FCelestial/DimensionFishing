@@ -1,0 +1,8 @@
+name: DimensionFishing
+version: 1.0
+main: org.evenmorefish.dimensionfishing.DimensionFishingLoader
+api-version: 1.21
+description: Experimental plugin that allows void and lava fishing
+author: Oheers
+website: https://github.com/EvenMoreFish/DimensionFishing
+folia-supported: true
